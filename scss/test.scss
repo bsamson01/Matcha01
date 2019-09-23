@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display&display=swap');
+
+.layout, .home-layout {
+    max-width: 1400px;
+    margin: auto;
+}
+
+.home-layout {
+    height: fill-available;
+    background: url("/images/background.jpg") center center no-repeat fixed;
+}
+
+.body-container {
+    width: fill-available;
+    background: red;
+}
+
+nav {
+    font-family: 'Raleway', sans-serif;
+    padding : 10px;
+    text-align: center;
+    height: 10.4%;
+    padding: 2.5% 3%;
+
+    h2 {
+        font-family: 'Playfair Display', serif;
+        float: left;
+        height: fill-available;
+        margin: 0;
+    }
+
+    ul {
+        margin: 0;
+        text-align : center;
+        list-style: none;
+        float: right;
+        height: fill-available;
+        font-size: 20px;
+        padding: 17px 10px;
+
+        li {
+            float: left;
+            text-align: center;
+            padding: 0 20px;
+
+            a {
+                color: red;
+                text-decoration: none;
+
+                &:hover {
+                    color: orangered;
+                }
+            }
+        }
+    }
+}
+
+.index-container {
+    height: 79.5%;
+    padding: 20% 10%;
+
+    section {
+        color: #E5E5E5;
+        float: left;
+        width: 50%;
+        height: fill-available;
+        text-align: center;
+        padding: 3%;
+        background: rgba(90, 23, 23, 0.3);
+
+        h3 {
+            text-align: left;
+            font-weight: bold;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        p {
+            font-size: 20px;
+            padding : 20% 0;
+        }
+    }
+}
+
+footer {
+    bottom: 0;
+    text-align: center;
+    height: 10%;
+    padding : 3% 0;
+}
+
+form {
+    padding: 2%;
+
+    label {
+        font-size: 20px;
+        color: lightgrey;
+        cursor: pointer;
+
+        &input {
+            float: left;
+            clear: both;
+        }
+    }
+
+    input {
+        margin:15px 0;
+        padding:15px 10px;
+        width:100%;
+        outline:none;
+        border:1px solid #bbb;
+        border-radius:50px;
+        display:inline-block;
+        box-sizing:border-box;
+        transition:0.2s ease all;
+
+        &[type="text"], &[type="password"], &[type="email"] {
+            background: rgba(10, 10, 10, 0.3);
+            border: none;
+            font-size: 17px;
+            border-radius: 10px;
+
+            &:focus {
+                background: none;
+            }
+        }
+    }
+
+    .forgotpwd,
+    .register {
+        margin:10px;
+        font-size: 17px;
+        float: left;
+        clear:left;
+        color:cornflowerblue;
+        text-decoration:none;
+    }
+}
+
+
+.signup-modal {
+    display: none;
+    margin: auto;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+
+    .content {
+        background-color: rgba(120, 80, 80, 0.5);
+        margin: auto;
+        padding : 20px;
+        border: 1px solid #888;
+        max-width: 1400px;
+        width: 100%;
+        height: fill-available;
+
+        .close {
+            color: rgb(182, 54, 16);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+    
+        .close:hover, .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        form {
+            background: rgba($color: #000000, $alpha: 0.87);
+            width: 80%;
+            padding : 20px;
+            margin: auto;
+            border-radius: 20px;
+            margin-top: 25%;
+            min-width: 500px;
+            max-width: 600px;
+            text-align: center;
+
+            h3 {
+                color: rgb(182, 54, 16);
+            }
+
+            input {
+                border-bottom: solid 1px ghostwhite;
+                color: white;
+
+                &[type="submit"] {
+                    color: darkgray;
+                }
+            }
+        }
+    }
+}

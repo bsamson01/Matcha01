@@ -1,0 +1,19 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        link(rel="stylesheet", href="/css/app.min.css")
+        link(rel="stylesheet", href="/css/foundation.min.css")
+        link(rel="icon" href="/icon.png")
+        title #{title}
+    body
+        div(class="container home-layout")
+            include ./nav-bar.pug
+            div(class="index-container")
+                block content
+            footer(class="bg-dark")
+                a Copyright &copy; 2019
+    script(type="text/javascript" src="/js/jquery.js")
+    script(type="text/javascript" src="/js/app.min.js")
+    script(type="text/javascript" src="/js/foundation.min.js")
