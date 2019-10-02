@@ -27,6 +27,31 @@ let userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    bday: {
+        type: String
+    },
+    gender: {
+        type: String
+    },
+    orientation: {
+        type: String
+    },
+    race: {
+        type: String
+    },
+    occupation: {
+        type: String
+    },
+    school: {
+        type: String
+    },
+    preforientation: {
+        type: String
+    },
+    age: {
+        type: Number
+    }
+
 });
 
 let Users = module.exports = mongoose.model('User', userSchema);

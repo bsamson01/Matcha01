@@ -5,15 +5,15 @@ html(lang="en")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
         link(rel="stylesheet", href="/css/app.min.css")
         link(rel="stylesheet", href="/css/foundation.min.css")
+        link(rel="stylesheet", href="/css/"+pageName+"/app.min.css")
         link(rel="icon" href="/icon.png")
         title #{title}
     body
-        div(class="container layout")
+        div(class="grid-container")
             include ./nav-bar.pug
-            span(style="font-size:30px;cursor:pointer" class="small-only") &#9776;
-            div(class="body-container")
+            main(class="grid-container no-padding no-margin")
                 block content
-            footer(class="bg-dark")
+            footer(class="footer")
                 a Copyright &copy; 2019
     script(type="text/javascript" src="/js/jquery.js")
     script(type="text/javascript" src="/js/app.min.js")

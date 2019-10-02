@@ -4,28 +4,19 @@ const uglify = require('gulp-uglify');
 const sass = require('gulp-sass');
 const rename = require('gulp-rename');
 const autoprefixer = require('gulp-autoprefixer');
-
-const AUTOPREFIXER_BROWSERS = [
-    'ie >= 10',
-    'ie_mob >= 10',
-    'ff >= 30',
-    'chrome >= 34',
-    'safari >= 7',
-    'opera >= 23',
-    'ios >= 7',
-    'android >= 4.4',
-    'bb >= 10'
-  ];
   
   gulp.task('sass' , function() {
-    return gulp.src('scss/**/*.scss')
+    return gulp.src("./scss/**/*.scss")
       .pipe(sass({
         outputStyle: 'nested',
+        style: 'expanded',
+        "sourcemap=none": true,
         precision: 10,
         includePaths: ['.'],
+        noCache: true,
         onError: console.error.bind(console, 'Sass error:')
       }))
-      .pipe(autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
+      .pipe(autoprefixer())
       .pipe(cssnano())
       .pipe(rename({
         basename: "app",
