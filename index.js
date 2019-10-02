@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const http = require('http');
 const app = express();
 
 mongoose.set('useNewUrlParser', true);
@@ -71,6 +70,6 @@ app.get('/logout', function(req, res, next) {
     next();
 });
 
-http.Server(app).listen(3000, function() {
-    console.log("HTTP server listening on port 3000");
+app.listen(process.env.PORT || 4000 , function() {
+    console.log("App is running");
 });

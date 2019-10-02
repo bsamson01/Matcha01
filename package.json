@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "gulp buid && nodemon index.js"
+    "start-dev": "gulp build && nodemon index.js",
+    "run": "node index.js"
   },
   "repository": {
     "type": "git",
