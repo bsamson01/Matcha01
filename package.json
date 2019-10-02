@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "browserslist": [
+    "last 2 version",
+    "> 2%"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "gulp buid && nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -20,11 +25,9 @@
     "gulp": "^4.0.2"
   },
   "dependencies": {
-    "autoprefixer": "^9.6.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
-    "cssnano": "^4.1.10",
     "express": "^4.17.1",
     "express-messages": "^1.0.1",
     "express-session": "^1.16.2",
@@ -41,8 +44,6 @@
     "passport": "^0.4.0",
     "path": "^0.12.7",
     "pug": "^2.0.4",
-    "rename": "^1.0.4",
-    "sass": "^1.22.12",
-    "uglify": "^0.1.5"
+    "rename": "^1.0.4"
   }
 }

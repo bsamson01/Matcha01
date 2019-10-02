@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const path = require('path');
-const expressValidator = require('express-validator');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const config = require('./config/database');
@@ -15,9 +14,12 @@ mongoose.set('useUnifiedTopology', true);
 
 mongoose.connect(config.database);
 let db = mongoose.connection;
+
 db.once('open', function(){
     console.log("Connected");
 });
+
+var sess;
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -35,37 +37,42 @@ app.use(function(req, res, next) {
     res.locals.messages = require('express-messages')(req, res);
     next();
 });
-// app.use(expressValidator({
-//     errorFormatter: function(param, msg, value) {
-//         var namespace = param.split('.'),
-//         root = namespace.shift(),
-//         formParam = root;
-
-//         while(namespace.length){
-//             formParam += '[' + namespace.shift() + ']';
-//         }
-//         return{
-//             param : formParam,
-//             msg : msg,
-//             value : value
-//         };
-//     }
-// }));
 
 app.get('*', function(req, res, next) {
-    res.locals.user = req.user || null;
+    res.locals.user = req.session.user;
     next();
 });
 
-let User = require('./models/users');
 let account = require('./routes/account');
-
 app.use('/account', account);
 
-app.get('/', function(req,res,next){
-    res.render("index");
+app.get('/', function(req,res,next) {
+    res.render("index", {
+        pageName : "index",
+        user: req.session.user
+    });
 });
 
+app.get('/fill-details', function(req,res,next) {
+    res.render("fill-details", {
+        pageName : "fill-details",
+        user: req.session.user
+    });
+});
+
+app.post('/fill-details', function(req,res,next) {
+    res.render("fill-details", {
+        pageName : "fill-details",
+        user: req.session.user
+    });
+});
+
+app.get('/logout', function(req, res, next) {
+    req.session.destroy();
+    req.flash('success', 'You are logged out');
+    res.redirect('/');
+    next();
+});
 
 http.Server(app).listen(3000, function() {
     console.log("HTTP server listening on port 3000");

@@ -1,8 +1,11 @@
-nav
-    h2 Matcha
-    ul
-        li
-            a(href="#" id="myBtn") Signup
-        li
-            a(href="#") Login
+if user == null
+    nav(class="row grid-x")
+        h2(class="column small-4 header") Matcha
+        ul(class="column small-8 nav-links")
+            li
+                a(href="#" class="register") Signup
+            li
+                a(href="#") Login
+else
+    p #{user}
     
