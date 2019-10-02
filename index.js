@@ -3,6 +3,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const app = express();
+const mongoose = require('mongoose');
+const config = require('./config/database')
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -16,7 +18,6 @@ db.once('open', function(){
     console.log("Connected");
 });
 
-var sess;
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
