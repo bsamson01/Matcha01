@@ -44,17 +44,42 @@ let account = require('./routes/account');
 app.use('/account', account);
 
 app.get('/', function(req,res,next) {
-    res.render("index", {
-        pageName : "index",
-        user: req.session.user
-    });
+    if (req.session.user == null)
+        res.render("index", {
+            pageName : "index",
+            user: req.session.user
+        });
+    else
+        res.redirect('/path')
 });
 
 app.get('/fill-details', function(req,res,next) {
-    res.render("fill-details", {
-        pageName : "fill-details",
-        user: req.session.user
-    });
+    if (req.session.user && req.session.user.addedDetails == false)
+        res.render("fill-details", {
+            pageName : "fill-details",
+            user: req.session.user
+        });
+    else
+        res.redirect('/path')
+});
+
+app.get('/path', function(req, res, next) {
+    if (req.session.user == null)
+        res.redirect('/');
+    else if (req.session.user.addedDetails == false)
+        res.redirect('/fill-details')
+    else
+        res.redirect('/home')
+});
+
+app.get('/home', function(req, res, next) {
+    if (req.session.user && req.session.user.addedDetails == true)
+        res.render("home", {
+            pageName : "home",
+            user: req.session.user
+        })
+    else
+        res.redirect('/path')
 });
 
 app.post('/fill-details', function(req,res,next) {
@@ -66,7 +91,6 @@ app.post('/fill-details', function(req,res,next) {
 
 app.get('/logout', function(req, res, next) {
     req.session.destroy();
-    req.flash('success', 'You are logged out');
     res.redirect('/');
     next();
 });

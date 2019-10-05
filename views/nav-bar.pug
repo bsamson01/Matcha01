@@ -1,11 +1,21 @@
-if user == null
-    nav(class="row grid-x")
-        h2(class="column small-4 header") Matcha
-        ul(class="column small-8 nav-links")
+nav(class="row grid-x")
+    h2(class="column small-3 header") Matcha
+    ul(class="column small-9 nav-links")
+        if user == null
             li
-                a(href="#" class="register") Signup
+                a(href="#" class="register") Sign Up
             li
                 a(href="#") Login
-else
-    p #{user}
+        else
+            li
+                a(class="button hollow" href="/logout") Logout
+            if user.addedDetails
+                li
+                    a(href="#") Update Profile
+                li
+                    a(href="#") Chat
+                li
+                    a(href="#") Notifications
+                li
+                    a(href="#") Matches
     

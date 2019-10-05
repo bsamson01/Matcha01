@@ -2,7 +2,6 @@ let mongoose = require('mongoose');
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-const uniqueValidator = require('mongoose-unique-validator');
 
 let userSchema = mongoose.Schema({
     firstname:{
@@ -50,8 +49,18 @@ let userSchema = mongoose.Schema({
     },
     age: {
         type: Number
+    },
+    addedDetails: {
+        type: Boolean,
+        default: false
+    },
+    confirmcode: {
+        type: Number
+    },
+    verified: {
+        type: Boolean,
+        default: false
     }
-
 });
 
 let Users = module.exports = mongoose.model('User', userSchema);

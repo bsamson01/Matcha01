@@ -17,6 +17,8 @@ db.once('open', function() {
     console.log("Connected");
 });
 
+const sendEmail = require("../config/mailer");
+
 router.get('/', function(req, res, next) {
     res.redirect('/');
 });
@@ -42,8 +44,20 @@ router.post('/register', function(req, res, next) {
                 else {
                     bcrypt.hash(password, saltRounds, function(err, salt) {
                         hashedpwd =  salt;
-                        var usr = new User({firstname: firstname, lastname: lastname, username: username, email: email, password: hashedpwd});
+                        var code = Math.floor((Math.random() * 1000000) + 100000);
+                        var usr = new User({firstname: firstname, lastname: lastname, username: username, email: email, password: hashedpwd, confirmcode: code});
                         usr.save();
+
+                        var msg = "Hello " + username + "<br> Your confimation link is http://localhost:4000/account/verify?user=" + username + "&code=" + code;
+
+                        var mailOptions = {
+                            from: 'matchaapp6@gmail.com',
+                            to: email,
+                            subject: 'Matcha Registration',
+                            text: msg
+                        }
+                        sendEmail(mailOptions);
+
                     });
                 }
             });
@@ -52,54 +66,74 @@ router.post('/register', function(req, res, next) {
     res.redirect('/');
 });
 
+router.get('/verify', function(req, res, next) {
+    var username = req.query.user;
+    var code = req.query.code;
+
+    User.findOne({username: username}, function(err, user) {
+        if (err) console.log("user not found");
+        else {
+            User.findOneAndUpdate({username: user.username}, {"$set": {verified: true}})
+            .exec(function(err, user){
+                if (err)
+                    console.log("Cant update");
+                else {
+                    console.log("updated");
+                    res.redirect('/');
+                }
+                    
+            });
+        }
+    });
+});
+
 router.post('/login', function(req, res, next) {
     var password = req.body.password;
     var username = req.body.username;
     var correctpwd = false;
 
-    User.find({username: username}, function(err, usr) {
+    User.findOne({username: username}, function(err, usr) {
         if (err) return handleError(err);
         else {
-            if (usr.length == 0)
+            if (usr ==  null)
                 console.log("empty");
             else {
-                bcrypt.compare(password, usr[0].password, function(err, res) {
+                bcrypt.compare(password, usr.password, function(err, res) {
                     if (res) {
-                        req.session.user = username;
+                        req.session.user = usr;
                         req.session.save();
-                        console.log("correct password");
                         correctpwd = true;
                     }
                     else
-                    {
-                        console.log("incorrect password");
                         correctpwd = false;
-                    }
                 });
             }
-                
+            correctpwd == true ? res.redirect('/fill-details') : res.redirect('/');          
         }
-    }).then(function() {
-        correctpwd == true ? res.redirect('/fill-details') : res.redirect('/');
-    });
+    })
 })
 
 router.post('/infoupdate', function(req, res, next) {
 
-    User.findOneAndUpdate({"username" : req.session.user}, {"$set" : req.body})
+    User.findOneAndUpdate({"username" : req.session.user.username}, {"$set" : req.body})
     .exec(function(err, user) {
         if (err) {
             console.log(err);
             res.status(500).send(err);
+            res.redirect('/');
         }
         else {
-            // res.status(200).send(usr)
-            console.log("done");
+            User.findOne({username: user.username}, function(err, usr) {
+                if (err) console.log(err);
+                else {
+                    req.session.user = usr;
+                    req.session.save;
+                    console.log(req.session.user);
+                    res.redirect('/');     
+                }
+            })  
         }
     })
-    console.log(req.session.user);
-
 })
-
 
 module.exports = router;

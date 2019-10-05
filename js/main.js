@@ -30,11 +30,12 @@ detailsform.on('submit', function(e) {
         "bio" : $("input[name=bio]").val(),
         "tagline" : $("input[name=tagline]").val(),
         "preforientation" : $("input[name=preforientation]").val(),
-        "age" : getAge()
+        "age" : getAge(),
+        "addedDetails" : true
     }
 
     $.ajax({
-        url : '/account/infoupdate',
+        url: '/account/infoupdate',
         type: 'post',
         data: info,
     }).done(function(res) {
@@ -53,3 +54,9 @@ function getAge() {
     var Bday = new Date($('#bday').val());
     return ~~((Date.now() - Bday) / (31557600000));
 }
+
+$("#encode").click(function() {
+	var getval = $("#input").val();
+		var result = $.base64.encode(getval)
+  $("p").text(result);
+});
