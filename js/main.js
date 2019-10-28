@@ -31,6 +31,7 @@ detailsform.on('submit', function(e) {
         "tagline" : $("input[name=tagline]").val(),
         "preforientation" : $("input[name=preforientation]").val(),
         "age" : getAge(),
+        "dob" : $('#bday').val(),
         "addedDetails" : true
     }
 
@@ -58,5 +59,5 @@ function getAge() {
 $("#encode").click(function() {
 	var getval = $("#input").val();
 		var result = $.base64.encode(getval)
-  $("p").text(result);
+    $("p").text(result);
 });

@@ -3,6 +3,16 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
+var def = {
+    profilepic : "/images/default.png",
+    img1 : "/images/default.png",
+    img2 : "/images/default.png",
+    img3 : "/images/default.png",
+    img4 : "/images/default.png"
+}
+
+var defaultImages = JSON.stringify(def);
+
 let userSchema = mongoose.Schema({
     firstname:{
         type: String,
@@ -50,6 +60,15 @@ let userSchema = mongoose.Schema({
     age: {
         type: Number
     },
+    bio: {
+        type: String
+    },
+    tagline: {
+        type: String
+    },
+    dob : {
+        type: String
+    },
     addedDetails: {
         type: Boolean,
         default: false
@@ -60,6 +79,10 @@ let userSchema = mongoose.Schema({
     verified: {
         type: Boolean,
         default: false
+    },
+    images: {
+        type: String,
+        default: defaultImages
     }
 });
 

@@ -54,13 +54,10 @@ app.get('/', function(req,res,next) {
 });
 
 app.get('/fill-details', function(req,res,next) {
-    if (req.session.user && req.session.user.addedDetails == false)
         res.render("fill-details", {
             pageName : "fill-details",
             user: req.session.user
         });
-    else
-        res.redirect('/path')
 });
 
 app.get('/path', function(req, res, next) {
@@ -82,9 +79,9 @@ app.get('/home', function(req, res, next) {
         res.redirect('/path')
 });
 
-app.post('/fill-details', function(req,res,next) {
-    res.render("fill-details", {
-        pageName : "fill-details",
+app.get('/images', function(req,res,next) {
+    res.render("images", {
+        pageName : "images",
         user: req.session.user
     });
 });
