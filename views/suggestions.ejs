@@ -1,0 +1,34 @@
+<% include layouts/header %>
+
+<h3 id="title_sugg"><span class="glyphicon glyphicon-star"></span> Suggestion of the user </h3>
+<div id="user_search">
+  <b>Distance interval :</b><br>
+  <input type="number" name="distance_min" min="0" max="1000" value="0"> to <input type="number" name="distance_max" min="0" max="1000" value="100"><br>
+  <b>Age interval :</b><br>
+  <input type="number" name="age_min" min="18" max="100" value="18"> to <input type="number" name="age_max" min="18" max="100" value="40"><br>
+  <b>Popularity Score interval :</b><br>
+  <input type="number" name="score_min" min="0" max="100" value="0"> to <input type="number" name="score_max" min="0" max="100" value="100"><br>
+  <b>Interests :</b><br>
+  <div class="list-group-item">
+    <select class="selectpicker show-menu-arrow form-control" multiple name="interests" id="select_tags_suggest">
+      <% 
+        var arrayLength = tags.length;
+        for (var i = 0; i < arrayLength; i++) { %>
+          <option id=<%= tags[i].id %> value=<%= tags[i].name %>><%= tags[i].name %></option>
+      <% } %>
+    </select>
+  </div>
+  <b>Order By :</b><br>
+  <div class="list-group-item">
+    <select class="selectpicker show-menu-arrow form-control" name="order_by" id="order_by_suggest">
+      <option value="ponderation" selected>ponderation</option>
+      <option value="tags">tags</option>
+      <option value="distance">distance</option>
+      <option value="popularity">popularity</option>
+    </select>
+  </div><br />
+  <input type="button" id="suggestion_refresh" class="btn btn-success" value="Suggest me !">
+</div>
+<div id="collection_suggest" style="display:none;"></div>
+<% include layouts/chat %><br />
+<% include layouts/footer %>

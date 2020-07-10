@@ -1,0 +1,12 @@
+<% include layouts/header %>
+  <div class="error"><%= typeof error !== 'undefined' ? error : "" %></div>
+  <div class="error"><%= typeof success !== 'undefined' ? success : "" %></div>
+
+  <h3><span class="glyphicon glyphicon-hourglass"></span> Report a bug</h3>
+  <div class="well">
+    <textarea rows="10" cols="50" name="desc_bug" id="desc_bug"></textarea><br>
+    <input id="send_bug" name="send_bug" type="submit" value="Send" class="btn btn-success">
+  </div>
+
+<% include layouts/chat %><br />
+<% include layouts/footer %><br />

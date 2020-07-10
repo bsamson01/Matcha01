@@ -1,0 +1,79 @@
+<title>Map | Matcha</title>
+<div class="row">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+    </style>
+
+    <div id="floating-panel">
+      <input id="address" type="textbox" value="Your Address">
+      <input id="submit" type="button" value="Validate"><br>
+      <a href="/account">Return to profile</a>
+    </div>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: {lat: 48.89640499999999, lng: 2.31861200000003}
+        });
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('submit').addEventListener('click', function() {
+          geocodeAddress(geocoder, map);
+        });
+      }
+
+      function geocodeAddress(geocoder, resultsMap) {
+        var loc = [];
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+            loc[0]= results[0].geometry.location.lat();
+            loc[1]= results[0].geometry.location.lng();
+            console.log(loc.join(','));
+            var final = loc.join(',');
+            // send_location(loc.join(','));
+
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/map');
+            // xhr.setRequestHeader("Content-Type", "application/json");
+            // xhr.send(a=final);
+            var someStuff = 'param1=' + final + '&param2=val2&param3=val3';
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            xhr.send(someStuff);
+            alert("Position saved ! Located at " + document.getElementById('address').value);
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+          // window.location.replace("/account");
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZnG-HR7kcUGqWbAS3EVNVlfNJyLcmErQ&callback=initMap">
+    </script>
+</div>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= title %> | Matcha</title>
+    <script src="/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/bootstrap-select.css">
+    <link rel="icon" href="http://127.0.0.1:3000/uploads/favicon.png" />
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Matcha</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="<%= title == "Home" ? 'active' : undefined %>"><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <% if (connected){ %><li class="<%= title == "Suggestions" ? 'active' : undefined %>"><a href="/suggestions"><span class="glyphicon glyphicon-list"></span> Suggestions</a></li><% } %>
+            <li><a onclick="load_alerts();" id="alert_nbr" value="0"></a></li>
+          </ul>
+
+            <div class="navbar-text pull-right no_puce_li">
+              <% if (connected){ %>
+                <!-- <li style="display: inline;"><a href="/profile/" class="navbar-link">My Public Profile</a></li> | -->
+                <li style="display: inline;"><a href="/account" class="navbar-link"><span class="glyphicon glyphicon-user"></span> Account</a></li> | 
+                <li style="display: inline;"><a href="/auth/signout" class="navbar-link"><span class="glyphicon glyphicon-remove-sign"></span> Signout</a></li> | 
+                <li style="display: inline;"><a href="/bugs" class="navbar-link"><span class="glyphicon glyphicon-hourglass"></span> Bugs</a></li>
+              <% }else{ %>
+                <li style="display: inline;"><a href="/auth/signin" class="navbar-link">Signin</a></li> | 
+                <li style="display: inline;"><a href="/auth/signup" class="navbar-link">Signup</a></li>
+              <% } %>
+            </div>
+        </div>
+      </div>
+    </nav>
+
+    <div id="alerts_list">
+    </div>
+
+    <div class="container">

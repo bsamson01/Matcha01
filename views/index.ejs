@@ -1,0 +1,46 @@
+<% include layouts/header %>
+
+<% if (connected) { %>
+
+  <h3 id="title_search"><span class="glyphicon glyphicon-screenshot"></span> Search for someone </h3>
+  <div id="user_search">
+    <div class="input-field col s12" id="debug_search">
+      <input type="search" id="search_user" class="form-control" autocomplete="off" style="width: 20%;" placeholder="Search by identity">
+    </div>
+    <b>Distance interval :</b><br>
+    <input type="number" name="distance_min" min="0" max="1000" value="0"> to <input type="number" name="distance_max" min="0" max="1000" value="100"><br>
+    <b>Age interval :</b><br>
+    <input type="number" name="age_min" min="18" max="100" value="18"> to <input type="number" name="age_max" min="18" max="100" value="40"><br>
+    <b>Popularity Score interval :</b><br>
+    <input type="number" name="score_min" min="0" max="1000" value="0"> to <input type="number" name="score_max" min="18" max="1000" value="100"><br>
+    <b>Interests :</b><br>
+    <div class="list-group-item">
+      <select class="selectpicker show-menu-arrow form-control" multiple name="interests" id="select_tags_search">
+        <% 
+          var arrayLength = tags.length;
+          for (var i = 0; i < arrayLength; i++) { %>
+            <option id=<%= tags[i].id %> value=<%= tags[i].name %>><%= tags[i].name %></option>
+        <% } %>
+      </select>
+    </div>
+    <b>Order By :</b><br>
+    <div class="list-group-item">
+      <select class="selectpicker show-menu-arrow form-control" name="order_by" id="order_by_suggest">
+        <option value="ponderation" selected>none</option>
+        <option value="tags">tags</option>
+        <option value="distance">distance</option>
+        <option value="popularity">popularity</option>
+      </select>
+    </div><br />
+    <input type="button" id="search_refresh" class="btn btn-success" value="Search for me !">
+  </div>
+  <div id="collection_search" style="display:none;"></div>
+  <% include layouts/chat %><br />
+<% } else { %>
+  <div class="well well-lg">
+    <center><h1>💖 💘 Welcome to Matcha ! 💘 💖</h1>
+    <p>Register or login to continue!</p></center>
+  </div>
+<% } %>
+
+<% include layouts/footer %>

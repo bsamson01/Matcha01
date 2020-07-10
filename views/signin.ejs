@@ -1,0 +1,31 @@
+<% include layouts/header %>
+
+<div class="well well-lg">
+  <div class="error"><%= typeof error !== 'undefined' ? error : "" %></div>
+  <form action="/auth/signin" method="post" class="center form-horizontal" role="form" style="width: 50%;">
+    <div class="row">
+      <div class="form-group">
+          <label for="email" class="col-sm-2 control-label">Username</label>
+          <div class="col-sm-10">
+              <input type="text" class="form-control" id="username" name="username" placeholder="login" required=true>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="password" class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+              <input type="password" class="form-control" id="password" name="password" placeholder="" required=true>
+          </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+        <!-- <div class="col-sm-10 col-sm-offset-2"> -->
+            <input id="submit" name="submit" type="submit" value="Signin on Matcha !" class="btn btn-success" style="float: right;">
+            <!-- <input id="submit" name="submit" type="submit" value="Forgot my password" class="btn btn-primary" style="float: left;"> -->
+            <a href="/auth/reset">Forgot my password</a>
+        <!-- </div> -->
+    </div>
+  </form>
+</div>
+
+<% include layouts/footer %>

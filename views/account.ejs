@@ -1,0 +1,151 @@
+<% include layouts/header %>
+<div class="error"><%= typeof error !== 'undefined' ? error : "" %></div>
+<div class="error"><%= typeof success !== 'undefined' ? success : "" %></div>
+
+<div class="row">
+    <a href="/profile/<%= user.id %>" class="thumbnail" style="margin-left: 40%;margin-right: 40%;">
+      <img src="<%= user.picture ? "http://127.0.0.1:3000/uploads/" + user.picture : "http://127.0.0.1:3000/uploads/default_image.png" %>" style="max-height:200px;max-width:200px;">
+      <center><%= user.username %></center>
+      <center>Score: <%= user.score %></center>
+    </a>
+</div>
+
+<form action="/account" method="post" class="center form-horizontal" role="form">
+
+  <div class="row">
+    <div class="col-sm-5 col-md-6">
+      <a class="list-group-item"><b>Email:</b><br />
+        <input type="text" class="form-control" id="email" name="email" value="<%= user.mail %>" required=true>
+      </a>
+      <a class="list-group-item"><b>Identity:</b><br />
+        <input type="text" class="form-control" id="firstname" name="firstname" value="<%= user.firstname %>" required=true style="width:50%;display:inline;"><input type="text" class="form-control" id="lastname" name="lastname" value="<%= user.lastname %>" required=true style="width:50%;display:inline;">
+      </a>
+      <a class="list-group-item"><b>Age:</b><br />
+        <input type="number" class="form-control" id="age" name="age" value="<%= user.age %>" required=true min=18>
+      </a>
+      <a class="list-group-item"><b>Gender:</b><br />
+        <select name="gender" class="form-control" id="gender">
+          <option value="MAN" <%= (user.gender === "MAN") ? "selected" : ""%>>Male</option> 
+          <option value="WOMAN" <%= (user.gender === "WOMAN") ? "selected" : ""%>>Female</option>
+        </select>
+      </a>
+    </div>
+    <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+      <a class="list-group-item"><b>Bio:</b><br />
+        <input type="text" class="form-control" id="bio" name="bio" value="<%= (user.bio) == undefined ? "" : user.bio %>" required=true>
+      </a>
+      <div class="list-group-item"><b>Location:</b><br />
+        <input type="text" class="form-control" id="location" name="location" value="<%= (user.location) == undefined ? "48.896574,2.318558" : user.location %>" required=true disabled="true" style="width: 69%; display: inline;">
+        <a href="http://127.0.0.1:3000/map" class="btn btn-info" value="Input Button"><span class="glyphicon glyphicon-fullscreen"></span> Choose a location</a>
+      </div>
+      <a class="list-group-item"><b>Orientation:</b><br />
+        <select name="orientation" class="form-control" id="orientation">
+          <option value="HETERO" <%= (user.orientation === "HETERO") ? "selected" : ""%>>HETEROSEXUAL</option> 
+          <option value="BI" <%= (user.orientation === "BI") ? "selected" : ""%>>BISEXUAL</option>
+          <option value="HOMO" <%= (user.orientation === "HOMO") ? "selected" : ""%>>HOMOSEXUAL</option>
+        </select>
+      </a>
+      <a class="list-group-item"><b>Register Date:</b><br />
+        <input type="text" class="form-control" id="register_date" name="register_date" value="<%= user.register_date %>" required=true disabled=true>
+      </a>
+    </div>
+  </div>
+
+
+
+        <div class="list-group-item"><b>Tags:</b><br />
+          <select multiple style="height:150px" id="tag_user" name="tag_user">
+            <% 
+              var arrayLength = all_tags.length;
+              for (var i = 0; i < arrayLength; i++) { %>
+                <option id=<%= all_tags[i].id %>><%= all_tags[i].name %></option>
+            <% } %>
+          </select>
+        </div>
+
+  <!-- <div class="list-group-item"><b>Tags:</b><br />
+    <select class="selectpicker show-menu-arrow form-control" multiple>
+      <#% 
+        var arrayLength = all_tags.length;
+        for (var i = 0; i < arrayLength; i++) { %>
+        <option id=<#%= i + 1 %>><#%= all_tags[i].name %></option>
+      <#% } %>
+    </select>
+  </div> -->
+
+  <input id="submit_account" name="submit" type="submit" value="Update account !" class="btn btn-success" style="float: right;">
+</form>
+<br><br>
+<div class="well" style="overflow:auto;">
+  <div style="width: auto;">
+    <form id        =  "uploadForm"
+         enctype   =  "multipart/form-data"
+         action    =  "/account/image/add"
+         method    =  "post"
+    >
+    <input type="file" name="userPhoto" />
+    <input type="submit" value="Upload Image (2 max)" name="submit" class="btn btn-success">
+  </form>
+  </div>
+  <div style="width: auto;">
+    <% for (var i = 0; i < images.length; i++) { %>
+      <div class="col-sm-6 col-md-2">
+        <div class="thumbnail">
+          <img src="http://127.0.0.1:3000/uploads/<%= images[i].img %>" style="width: 140px;height:150px;"><br>
+          <center>
+            <p>
+              <a onclick='image_first("<%= images[i].img %>");' class="btn btn-primary" role="button" name="<%= images[i].img %>" id="first_image">First</a> 
+              <a onclick="image_delete('<%= images[i].img %>');" class="btn btn-danger" role="button" name="<%= images[i].img %>" id="delete_image">Delete</a>
+            </p>
+          </center>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</div>
+<div id="map_hidden" style="display:none;">
+<div id="map"></div>
+</div>
+<script type="text/javascript">
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 8,
+    center: {lat: 40.731, lng: -73.997}
+  });
+  var geocoder = new google.maps.Geocoder;
+  var infowindow = new google.maps.InfoWindow;
+
+    geocodeLatLng(geocoder, map, infowindow);
+}
+
+function geocodeLatLng(geocoder, map, infowindow) {
+  var input = document.getElementById('location').value;
+  var latlngStr = input.split(',', 2);
+  var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+  geocoder.geocode({'location': latlng}, function(results, status) {
+    if (status === 'OK') {
+      if (results[1]) {
+        map.setZoom(11);
+        var marker = new google.maps.Marker({
+          position: latlng,
+          map: map
+        });
+        infowindow.setContent(results[1].formatted_address);
+        infowindow.open(map, marker);
+        console.log(results[1].formatted_address);
+        $('#location').val(results[1].formatted_address);
+      } else {
+        window.alert('No results found');
+      }
+    } else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
+  });
+}
+</script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZnG-HR7kcUGqWbAS3EVNVlfNJyLcmErQ&callback=initMap">
+    </script>
+<% include layouts/chat %><br />
+<% include layouts/footer %><br />

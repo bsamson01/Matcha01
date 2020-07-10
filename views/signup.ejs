@@ -1,0 +1,44 @@
+<% include layouts/header %>
+
+<div class="well well-lg">
+    <div class="error"><%= typeof error !== 'undefined' ? error : "" %></div>
+  <form action="/auth/signup" method="post" role="form">
+    <div class="row">
+        <div class="col-xs-6 form-group">
+            <label>Email</label>
+            <input class="form-control" type="email" placeholder="login@matcha.com" id="email" name="email" required=true/>
+        </div>
+        <div class="col-xs-6 form-group">
+            <label>Username</label>
+            <input class="form-control" type="text" placeholder="login" id="username" name="username" required=true/>
+        </div>
+        <div class="col-xs-12 form-group">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                  <label>Firstname</label>
+                    <input class="form-control" type="text" id="firstname" name="firstname" required=true/>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <label>Lastname</label>
+                    <input class="form-control" type="text" id="lastname" name="lastname" required=true/>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 form-group">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                  <label>Password</label>
+                    <input class="form-control" type="password" id="password" name="password" required=true/>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <label>Repeat Password</label>
+                    <input class="form-control" type="password" id="r_password" name="r_password" required=true/>
+                </div>
+            </div>
+        </div>
+        <center><input id="submit" name="submit" type="submit" value="Confirm registration !" class="btn btn-success"></center>
+    </div>
+  </form>
+</div>
+
+<% include layouts/footer %>
